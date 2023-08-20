@@ -1,14 +1,11 @@
 import { API_URLS, LOCALSTORAGE_TOKEN_KEY } from '../utils';
 
-//body can be null
 const customFetch = async (url, { body, ...customConfig }) => {
   const token = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
 
   const headers = {
-    // "Access-Control-Allow-Origin": "*",
     'content-type': 'application/json',
     Accept: 'application/json',
-    
   };
 
   if (token) {
@@ -51,6 +48,5 @@ const customFetch = async (url, { body, ...customConfig }) => {
 export const getPosts = (page = 1, limit = 5) => {
   return customFetch(API_URLS.posts(page, limit), {
     method: 'GET',
-    
   });
 };
