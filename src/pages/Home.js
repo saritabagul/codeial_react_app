@@ -1,11 +1,13 @@
 import styles from '../styles/home.module.css';
 import propTypes from 'prop-types';
+import { Comment } from '../components';
+
 
 const Home = ({posts}) => {
   return (
     <div className={styles.postsList}>
        {posts.map((post) => (
-      <div className={styles.postWrapper} key={post._id}>
+      <div className={styles.postWrapper} key={`post-${post._id}`}>
         <div className={styles.postHeader}>
           <div className={styles.postAvatar}>
             <img
@@ -33,24 +35,18 @@ const Home = ({posts}) => {
                 src="https://cdn-icons-png.flaticon.com/128/1380/1380338.png"
                 alt="comments-icon"
               />
-              <span>2</span>
+              <span>{post.comments.length}</span>
             </div>
           </div>
           <div className={styles.postCommentBox}>
             <input placeholder="Start typing a comment" />
           </div>
-
           <div className={styles.postCommentsList}>
-            <div className={styles.postCommentsItem}>
-              <div className={styles.postCommentHeader}>
-                <span className={styles.postCommentAuthor}>Bill</span>
-                <span className={styles.postCommentTime}>a minute ago</span>
-                <span className={styles.postCommentLikes}>22</span>
-              </div>
-
-              <div className={styles.postCommentContent}>Random comment</div>
+              {post.comments.map((comment) => (
+                <Comment comment={comment} />
+              ))}
             </div>
-          </div>
+          
         </div>
       </div>
        )
