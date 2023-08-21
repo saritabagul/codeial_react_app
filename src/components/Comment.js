@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 import styles from '../styles/home.module.css';
 
@@ -17,7 +17,7 @@ const Comment = ({ comment }) => {
 };
 
 Comment.propTypes = {
-  comment: PropTypes.object.isRequired,
+  comment: propTypes.object.isRequired,
 };
 
 export default Comment;
