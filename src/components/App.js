@@ -39,9 +39,9 @@ function App() {
   }
 
   return (
-    <div className="App">
-         <Navbar />
+    <div className="App">        
       <Router>
+        <Navbar />
         <Routes>
         <Route exact path="/" element={<Home posts={posts}/>}>          
         </Route>
