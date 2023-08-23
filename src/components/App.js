@@ -4,6 +4,7 @@ import { getPosts } from '../api';
 import { Home,Login} from '../pages';
 import {Loader,Navbar} from './';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import { useAuth } from '../hooks';
 
 const About = () => {
   return <h1>About</h1>;
@@ -20,6 +21,11 @@ const Page404 = () =>{
 function App() {
   const [posts,setPosts] = useState([]);
   const [Loading,setLoading] = useState(true);
+
+  const auth = useAuth();
+
+  
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await getPosts();
@@ -34,7 +40,7 @@ function App() {
     fetchPosts();
   }, []);
 
-  if(Loading){
+  if(auth.loading){
     return <Loader />
   }
 
