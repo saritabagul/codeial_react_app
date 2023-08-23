@@ -1,9 +1,30 @@
+import { useEffect, useState } from 'react';
+import { getPosts } from '../api';
 import styles from '../styles/home.module.css';
 import propTypes from 'prop-types';
 import { Comment } from '../components';
 
 
-const Home = ({posts}) => {
+
+const Home = () => {
+
+  const [posts,setPosts] = useState([]);
+  const [Loading,setLoading] = useState(true);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await getPosts();
+      // console.log('response', response);
+      if (response.success) {
+        setPosts(response.data.posts);
+      }
+      setLoading(false);
+    };
+    
+  
+    fetchPosts();
+  }, []);
+  
+
   return (
     <div className={styles.postsList}>
        {posts.map((post) => (
