@@ -1,5 +1,5 @@
 
-import { Home,Login} from '../pages';
+import { Home,Login,Signup} from '../pages';
 import {Loader,Navbar} from './';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 import { useAuth } from '../hooks';
@@ -35,7 +35,7 @@ function App() {
          
         </Route>
 
-        <Route exact path="/about" element={<About/>}>            
+        <Route exact path="/signup" element={<Signup/>}>            
         </Route>
 
         <Route exact path="/userinfo" element={<UserInfo/>}>          

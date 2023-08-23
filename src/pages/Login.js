@@ -40,7 +40,7 @@ const Login = () => {
       </div>
 
       <div className={styles.field}>
-        <input type="password" placeholder="Paasword" value={password} onChange={(e)=> setPassword(e.target.value)} />
+        <input type="password" placeholder="Password" value={password} onChange={(e)=> setPassword(e.target.value)} />
       </div>
 
       <div className={styles.field} >
