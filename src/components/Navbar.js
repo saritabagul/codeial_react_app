@@ -1,6 +1,7 @@
+import {useAuth} from '../hooks';
 import styles from '../styles/navbar.module.css';
 import {Link} from 'react-router-dom';
-import {useAuth} from '../hooks';
+
 
 const Navbar = () => {
   const auth = useAuth();
@@ -18,14 +19,15 @@ const Navbar = () => {
       <div className={styles.rightNav}>
         {auth.user && 
         <div className={styles.user}>
-          <a href="/">
+          <Link to="/settings">
             <img
-              src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+              src="https://cdn-icons-png.flaticon.com/128/3237/3237472.png"
               alt=""
               className={styles.userDp}
             />
-          </a>
+         </Link>
           <span>{auth.user.name}</span>
+         
         </div>
       }
         <div className={styles.navLinks}>
