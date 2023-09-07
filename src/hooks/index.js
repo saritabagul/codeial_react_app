@@ -1,5 +1,5 @@
 import { useContext, useEffect, useInsertionEffect, useState } from "react";
-import { register, login as userLogin } from "../api";
+import { editProfile, register, login as userLogin } from "../api";
 import { AuthContext } from "../providers/AuthProvider";
 import { setItemInLocalStorage ,LOCALSTORAGE_TOKEN_KEY, removeItemFromLocalStorage, getItemFromLocalStorage} from "../utils";
 import jwt from 'jwt-decode';
@@ -53,11 +53,28 @@ export const useProvideAuth = () => {
         removeItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY)
     }
 
+    const updateUser = async(userId,name,password,confirmPassword) => {
+        const response =  await editProfile(userId,name,password,confirmPassword);
+        console.log('response',response);
+
+        if(response.success){
+            setUser(response.data.user);
+            return {success:true};
+        }else{
+            return{
+                success:false,
+                message:response.message,
+            }
+        }
+
+    };
+
     return {
         user,
         login,
         logout,
         loading,
-        signup
+        signup,
+        updateUser
       };
     };
