@@ -3,7 +3,7 @@ import {useToasts} from 'react-toast-notifications';
 import { useState } from 'react';
 import { signup } from '../api'; 
 import { useAuth } from '../hooks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Navigate } from 'react-router-dom';
 const Signup = () => {
     const [email,setEmail] = useState('');
     const [name,setName] = useState('');
@@ -55,6 +55,11 @@ const Signup = () => {
         setSignup(false);
     };
 
+
+  if(auth.user){
+    return <Navigate to="/" />
+  
+  }  
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>

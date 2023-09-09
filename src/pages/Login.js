@@ -3,6 +3,8 @@ import {useToasts} from 'react-toast-notifications';
 import { useState } from 'react';
 import { login } from '../api'; 
 import { useAuth } from '../hooks';
+import { useNavigate,Navigate } from 'react-router-dom';
+
 const Login = () => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -30,7 +32,11 @@ const Login = () => {
         setloggingIn(false);
     };
 
-
+    if(auth.user){
+      return <Navigate to="/" />
+    
+    } 
+    
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>
       <span className={styles.loginSignupHeader}>Log In</span>
