@@ -1,8 +1,23 @@
 
 import { Home,Login,Signup,Settings} from '../pages';
 import {Loader,Navbar} from './';
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import {BrowserRouter as Router,Routes,Route,Navigate} from 'react-router-dom';
 import { useAuth } from '../hooks';
+
+function PrivateRoute({children,...rest}){
+  const auth = useAuth();
+  // return <Route {...rest} render={()=>{
+    if(auth.user){
+      return children;
+    }
+    
+    return <Navigate to="/login" />
+
+  // }
+// }>
+  // </Route>
+
+}
 
 const About = () => {
   return <h1>About</h1>;
@@ -38,8 +53,14 @@ function App() {
         <Route exact path="/signup" element={<Signup/>}>            
         </Route>
 
-        <Route exact path="/settings" element={<Settings/>}>            
+        {/* <Route exact path="/settings" element={<Settings/>}>            
+        </Route> */}
+
+        <Route exact path="/settings" element={<PrivateRoute>
+          <Settings/></PrivateRoute>}>            
         </Route>
+
+       
 
         <Route exact path="/userinfo" element={<UserInfo/>}>          
         </Route>
