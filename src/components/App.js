@@ -60,8 +60,6 @@ function App() {
           <Settings/></PrivateRoute>}>            
         </Route>
 
-       
-
         <Route exact path="/userinfo" element={<UserInfo/>}>          
         </Route>
 
