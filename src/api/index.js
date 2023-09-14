@@ -1,11 +1,10 @@
-import { API_URLS, LOCALSTORAGE_TOKEN_KEY,getFormBody } from '../utils';
+import { API_URLS, getFormBody, LOCALSTORAGE_TOKEN_KEY } from '../utils';
 
 const customFetch = async (url, { body, ...customConfig }) => {
   const token = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
 
   const headers = {
     'content-type': 'application/x-www-form-urlencoded',
-    // Accept: 'application/json',
   };
 
   if (token) {
@@ -21,7 +20,6 @@ const customFetch = async (url, { body, ...customConfig }) => {
   };
 
   if (body) {
-    // config.body = JSON.stringify(body);
     config.body = getFormBody(body);
   }
 
@@ -52,30 +50,35 @@ export const getPosts = (page = 1, limit = 5) => {
   });
 };
 
-export const login = (email,password) => {
+export const login = (email, password) => {
   return customFetch(API_URLS.login(), {
     method: 'POST',
-    body:{email, password}
+    body: { email, password },
   });
 };
 
-export const register = (name,email,password,confirm_password) => {
+export const register = async (name, email, password, confirmPassword) => {
   return customFetch(API_URLS.signup(), {
     method: 'POST',
-    body:{name,email,password,confirm_password}
+    body: { name, email, password, confirm_password: confirmPassword },
   });
 };
 
-export const editProfile = (userId,name,password,confirmPassword) => {
+export const editProfile = async (userId, name, password, confirmPassword) => {
   return customFetch(API_URLS.editUser(), {
     method: 'POST',
-    body:{id:userId,name,password,confirm_password:confirmPassword}
+    body: { id: userId, name, password, confirm_password: confirmPassword },
   });
 };
 
 export const fetchUserProfile = (userId) => {
   return customFetch(API_URLS.userInfo(userId), {
-    method: 'GET',   
+    method: 'GET',
   });
 };
 
+export const fetchUserFriends = () => {
+  return customFetch(API_URLS.friends(), {
+    method: 'GET',
+  });
+};

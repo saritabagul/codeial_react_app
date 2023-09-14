@@ -21,6 +21,7 @@ const UserProfile = () => {
   useEffect(()=>{
     const getUser = async()=>{
       const response = await fetchUserProfile(userId);
+      console.log(response);
       if(response.success){
         setUser(response.data.user);
       }else{
