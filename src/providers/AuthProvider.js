@@ -8,6 +8,7 @@ const initialState = {
     loading:true,
     signup:()=>{},
     updateUser:()=>{},
+    updateUserFriends:()=>{},
 };
 // console.log(initialState);
 

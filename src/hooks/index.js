@@ -2,14 +2,12 @@ import { useContext, useState, useEffect } from 'react';
 import jwt from 'jwt-decode';
 
 import { AuthContext } from '../providers/AuthProvider';
-
 import {
   editProfile,
   fetchUserFriends,
   login as userLogin,
   register,
 } from '../api';
-
 import {
   setItemInLocalStorage,
   LOCALSTORAGE_TOKEN_KEY,
@@ -54,7 +52,7 @@ export const useProvideAuth = () => {
   const updateUser = async (userId, name, password, confirmPassword) => {
     const response = await editProfile(userId, name, password, confirmPassword);
 
-    // console.log('response', response);
+    console.log('response', response);
     if (response.success) {
       setUser(response.data.user);
       setItemInLocalStorage(
@@ -74,7 +72,7 @@ export const useProvideAuth = () => {
 
   const login = async (email, password) => {
     const response = await userLogin(email, password);
-    console.log("response", response);
+
     if (response.success) {
       setUser(response.data.user);
       setItemInLocalStorage(
@@ -112,6 +110,25 @@ export const useProvideAuth = () => {
     removeItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
   };
 
+  const updateUserFriends = (addFriend, friend) => {
+    if (addFriend) {
+      setUser({
+        ...user,
+        friends: [...user.friends, friend],
+      });
+      return;
+    }
+
+    const newFriends = user.friends.filter(
+      (f) => f.to_user._id !== friend.to_user._id
+    );
+
+    setUser({
+      ...user,
+      friends: newFriends,
+    });
+  };
+
   return {
     user,
     login,
@@ -119,5 +136,6 @@ export const useProvideAuth = () => {
     loading,
     signup,
     updateUser,
+    updateUserFriends,
   };
 };
