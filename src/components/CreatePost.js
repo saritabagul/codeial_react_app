@@ -1,11 +1,38 @@
 import styles from '../styles/home.module.css';
 import {useState} from 'react';
+import { addPost } from '../api';
+import { useToasts } from 'react-toast-notifications';
 
 const CreatePost = () =>{
     const [post,setPost] = useState('');
     const [addingPost,setAddingPost] = useState(false);
+    const {addToast} = useToasts();
 
-    const handleAddPostClick = () => {};
+    const handleAddPostClick = async() => {
+        setAddingPost(true);
+
+        if(post === ''){
+            addToast('Please enter something in a post!',
+            {
+                appearance:'error'
+            })
+        }
+
+        const response = await addPost(post);
+        if(response.success){
+            setPost('');
+            addToast('Post created successfully!',
+            {
+                appearance:'success'
+            })
+        }else{
+            addToast(response.message,
+            {
+                appearance:'error'
+            })
+        }
+        setAddingPost(false);
+    };
 
     return(
         <div className={styles.createPost}>
