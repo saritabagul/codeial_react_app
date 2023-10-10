@@ -2,14 +2,14 @@ import styles from '../styles/home.module.css';
 import {useState} from 'react';
 import { addPost } from '../api';
 import { useToasts } from 'react-toast-notifications';
-import { usePost } from '../hooks';
+import { usePosts } from '../hooks';
 
 const CreatePost = () =>{
     const [post,setPost] = useState('');
     const [addingPost,setAddingPost] = useState(false);
     const {addToast} = useToasts();
 
-    const posts = usePost();
+    const posts = usePosts();
 
     const handleAddPostClick = async() => {
         setAddingPost(true);
