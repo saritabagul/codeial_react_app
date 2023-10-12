@@ -1,10 +1,41 @@
+import { useState,useEffect } from 'react';
 import {useAuth} from '../hooks';
 import styles from '../styles/navbar.module.css';
 import {Link} from 'react-router-dom';
+import { searchUsers } from '../api';
 
 
 const Navbar = () => {
+  const [results, setResults] = useState([]);
+  const [searchText,setSearchText] = useState('');
+  const [isUlOpen, setIsUlOpen] = useState(true);
   const auth = useAuth();
+
+  const toggleUl = () => {
+    setIsUlOpen(!isUlOpen);
+    setSearchText('');
+  };
+
+
+  useEffect(() =>{
+    const fetchUsers = async () =>
+    {
+      const response = await searchUsers(searchText);
+      if(response.success){
+          setResults(response.data.users);
+      }
+    };
+
+    if(searchText.length > 2){
+     
+      fetchUsers();
+    }else{
+      setResults([]);
+    }
+    setIsUlOpen(!isUlOpen);
+
+  },[searchText]);
+  
   return (
     <div className={styles.nav}>
       <div className={styles.leftDiv}>
@@ -14,6 +45,26 @@ const Navbar = () => {
             src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
           />
         </Link>
+      </div>
+
+      <div className={styles.searchContainer}>
+        <img className={styles.searchIcon} src="https://cdn-icons-png.flaticon.com/128/54/54481.png" alt="search icon" />
+        <input placeholder='Search users' value={searchText} onChange={(e)=> setSearchText(e.target.value)}/>
+        {(results.length > 0 && isUlOpen) && (<div className={styles.searchResults}>
+          
+          <ul>
+            {results.map((user)=>(
+              <li className={styles.searchResultRow} key={`user-${user._id}`} onClick={toggleUl}>
+                <Link to={`user/${user._id}`}>
+                  <img src="https://cdn-icons-png.flaticon.com/128/3177/3177440.png" alt="" height="40" width="40"/>
+                  <span>{user.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          
+          </div>
+          )}
       </div>
 
       <div className={styles.rightNav}>
